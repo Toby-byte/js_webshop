@@ -1,0 +1,12 @@
+img {
+    width: 102px;
+    margin: 0 0 0.5rem 2rem;
+    float: right;
+}
+
+article > footer {
+    clear: both;    
+}
+article > footer > p {
+    margin: 0;
+}
