@@ -4,7 +4,6 @@
 Simple webshop example. It uses:
 - `json-server` and `sessionStorage` for user signup and login
 - Fake Store API (https://fakestoreapi.com/) for product listing
-- `localStorage` for adding to cart
 
 ## Instructions
 1. Install JSON Server:
