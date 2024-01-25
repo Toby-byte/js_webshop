@@ -23,17 +23,14 @@
 const productBaseTemplate = () => {
     const template = document.createElement('article');
     template.innerHTML = `
-        <article>
-            <header>
-                <h2></h2>
-            </header>            
-            <img src="" alt="">
+        <header>
             <p></p>
-            <p class="price">&dollar;</p>
-            <footer>
-                <p></p>
-            </footer>
-        </article>
+            <h2></h2>
+        </header>            
+        <img src="" alt="">
+        <p class="description"></p>
+        <p class="price">&dollar;</p>
+        <button>Add to cart</button>
     `;
     return template;
 }
@@ -42,12 +39,12 @@ const productTemplate = productBaseTemplate();
 const productCard = (product) => {
     const card = productTemplate.cloneNode(true);
 
+    card.querySelector('header > p').innerText = product.category;
     card.querySelector('h2').innerText = product.title;
     card.querySelector('img').setAttribute('src', product.image);
     card.querySelector('img').setAttribute('alt', product.title);
-    card.querySelector('p').innerText = product.description;
+    card.querySelector('p.description').innerText = product.description;
     card.querySelector('p.price').innerText = product.price;
-    card.querySelector('footer > p').innerText = product.category;
 
     return card;
 }

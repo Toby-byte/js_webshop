@@ -1,8 +1,15 @@
-body, h1 {
+body, h1, h2 {
     margin: 0;
 }
 
 nav li {
     display: inline-block;
     list-style-type: none;
+}
+
+body > footer {
+    margin: 0;
+    padding: 0;
+    border: none;
+    text-align: center;
 }

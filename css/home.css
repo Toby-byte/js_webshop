@@ -1,22 +1,35 @@
 @import 'styles.css';
 
+:root {
+    --colourBorder: lightgray;
+    --colourLight: gray;
+}
+
 img {
     width: 102px;
-    margin: 0 0 0.5rem 2rem;
+    margin: 1rem 0 0.5rem 2rem;
     float: right;
 }
 
-article > footer {
-    clear: both;    
-}
-article > footer > p {
-    margin: 0;
+article {
+    border-bottom: thin solid var(--colourBorder);
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
 }
 
 header {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+}
+
+article > header {
+    flex-flow: column wrap;
+}
+article > header > p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--colourLight);
 }
 
 nav li {
