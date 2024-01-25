@@ -3,34 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log in | Webshop</title>
+    <title>Home | KEA Webshop</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-    <script src="js/login.js" type="module"></script>
+    <link rel="stylesheet" href="css/home.css">
+    <script src="js/products.js" type="module"></script>
 </head>
 <body>
     <header>
-        <h1>Webshop</h1>
+        <h1>KEA Webshop</h1>
+        <nav class="utility">
+            <ul>
+                <li id="optLogout" class="hidden">
+                    <span id="userEmail"></span>
+                    <a href="index.html" title="Log out">Log out</a>
+                </li>
+                <li id="optLogin">
+                    <a href="login.html" title="Log in">Log in</a>
+                </li>
+                <li id="optSignup">
+                    <a href="signup.html" title="Sign up">Sign up</a>
+                </li>
+            </ul>
+        </nav>
     </header>
-    <main>
-        <form id="frmLogin">
-            <div>
-                <label for="txtEmail">E-mail</label>
-                <input type="email" id="txtEmail" name="email" required>
-            </div>
-            <div>
-                <label for="txtPassword">Password</label>
-                <input type="password" id="txtPassword" name="password" required>
-            </div>
-            <div>
-                <input type="submit" value="Log in">
-            </div>
-        </form>
-        <section>
-            <p>Not a user yet? Please <a href="signup.html" target="_self" title="Sign up to the Webshop">sign up</a></p>
-        </section>
+    <main>        
     </main>
     <footer>
-        <p>&copy; 2023 Arturo Mora-Rioja</p>
+        <p>&copy; 2023-2024 Arturo Mora-Rioja</p>
     </footer>
 </body>
 </html>

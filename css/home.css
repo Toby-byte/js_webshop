@@ -1,0 +1,33 @@
+@import 'styles.css';
+
+img {
+    width: 102px;
+    margin: 0 0 0.5rem 2rem;
+    float: right;
+}
+
+article > footer {
+    clear: both;    
+}
+article > footer > p {
+    margin: 0;
+}
+
+header {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+nav li {
+    margin-left: 1rem;
+}
+
+.hidden {
+    display: none;
+}
+
+#userEmail {
+    font-size: 0.8rem;
+    margin-right: 1rem;
+}

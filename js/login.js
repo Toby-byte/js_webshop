@@ -19,7 +19,7 @@ document.querySelector('#frmLogin').addEventListener('submit', function(e) {
                 alert('Incorrect credentials');
             } else {
                 sessionStorage.setItem('userEmail', email);
-                window.location.href = 'home.html';
+                window.location.href = 'index.html';
             }
         }
     })
