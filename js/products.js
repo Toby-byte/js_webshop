@@ -20,38 +20,61 @@
     }
 })();
 
-fetch('https://fakestoreapi.com/products')
-.then(res => res.json())
-.then(data => {
-    console.log(data);
-
-    let productsList = '';
-    data.forEach((product) => {
-        productsList += productCard(product);
-    });
-    document.querySelector('main').innerHTML = productsList;
-});
-
-const productCard = (product) => {
-    return `
+const productBaseTemplate = () => {
+    const template = document.createElement('article');
+    template.innerHTML = `
         <article>
             <header>
-                <h2>${product.title}</h2>
+                <h2></h2>
             </header>            
-            <img src="${product.image}" alt="${product.title}">
-            <p>${product.description}</p>
-            <p>&dollar;${product.price}</p>
+            <img src="" alt="">
+            <p></p>
+            <p class="price">&dollar;</p>
             <footer>
-                <p>${product.category}</p>
+                <p></p>
             </footer>
         </article>
     `;
+    return template;
+}
+const productTemplate = productBaseTemplate();
+
+const productCard = (product) => {
+    const card = productTemplate.cloneNode(true);
+
+    card.querySelector('h2').innerText = product.title;
+    card.querySelector('img').setAttribute('src', product.image);
+    card.querySelector('img').setAttribute('alt', product.title);
+    card.querySelector('p').innerText = product.description;
+    card.querySelector('p.price').innerText = product.price;
+    card.querySelector('footer > p').innerText = product.category;
+
+    return card;
 }
 
-// Log out
-document.querySelector('#optLogout > a').addEventListener('click', (e) => {
-    // e.preventDefault();
+fetch('https://fakestoreapi.com/products')
+.then(res => {
+    if (res.ok) {
+        return res.json();
+    } else {
+        console.log('Error in fetch request: ', res.status, res.statusText);
+    }
+})
+.then(data => {
+    const productSection = document.createElement('section');
+    data.forEach((product) => {
+        productSection.appendChild(productCard(product));
+    });
+    document.querySelector('main').appendChild(productSection);
+}).catch(error => {
+    console.log('Error catched in fetch request: ', error);
 
+    const errorMessage = document.createElement('p');
+    errorMessage.innerText = 'Unfortunately, product information cannot be retrieved at this moment. Please try again later.'
+    document.querySelector('main').appendChild(errorMessage);
+});
+
+// Log out
+document.querySelector('#optLogout > a').addEventListener('click', () => {
     sessionStorage.removeItem('userEmail');
-    window.location.href = 'index.html';
 });
