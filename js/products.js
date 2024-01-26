@@ -135,6 +135,51 @@ fetch(apiUrl)
 });
 
 /**
+ * Shopping cart management
+ */
+const cartItemBaseTemplate = () => {
+    const template = document.createElement('article');
+    template.innerHTML = `
+        <p>
+            <span class="title"></span>
+            <span class="amount"></span>
+            <span class="price"></span>
+        </p>
+    `;
+    return template;
+}
+const cartItemTemplate = cartItemBaseTemplate();
+
+const cart = document.querySelector('#cart');
+document.querySelector('#optCart > a').addEventListener('click', () => {
+    const section = cart.querySelector('section');
+    section.innerHTML = '';
+
+    const cartInfo = document.createElement('div');
+    const storedCart = JSON.parse(localStorage.getItem('kea-webshop-cart'));
+    if (storedCart === null || storedCart.length === 0) {
+        const emptyCartMessage = document.createElement('p');
+        emptyCartMessage.innerText = 'The cart is empty. Please add some products to the cart.';
+        cartInfo.appendChild(emptyCartMessage);
+    } else {
+        storedCart.forEach((item) => {
+            const row = cartItemTemplate.cloneNode(true);
+            row.querySelector('.title').innerText = item.product;
+            row.querySelector('.amount').innerText = item.amount;
+            row.querySelector('.price').innerText = item.price;
+            cartInfo.appendChild(row);
+        });        
+    }
+    section.appendChild(cartInfo);
+    cart.showModal();
+});
+
+// Cart closing
+document.querySelector('#cart > header > div').addEventListener('click', () => {
+    cart.close();
+});
+
+/**
  * Upon logging out, the user's email is removed from sessionStorage
  */
 document.querySelector('#optLogout > a').addEventListener('click', () => {

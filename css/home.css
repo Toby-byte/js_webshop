@@ -48,6 +48,10 @@ input[type=number] {
     text-align: right;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 .hidden {
     display: none;
 }
