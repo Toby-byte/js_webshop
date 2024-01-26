@@ -3,6 +3,8 @@
 :root {
     --colourBorder: lightgray;
     --colourLight: gray;
+    --colourTextSecondary: floralwhite;
+    --colourBGButton: #6699FF;
 }
 
 img {
@@ -32,14 +34,32 @@ article > header > p {
     color: var(--colourLight);
 }
 
+article > div {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
 nav li {
     margin-left: 1rem;
+}
+
+input[type=number] {
+    width: 2.5rem;
+    text-align: right;
 }
 
 .hidden {
     display: none;
 }
 
+.price {
+    display: inline-block;
+    margin: 0 0 1rem 0;
+    padding: 0.25rem 1rem;
+    color: var(--colourTextSecondary);
+    background-color: var(--colourBGButton);
+    border-radius: 0.5rem;
+}
 .price:before {
     content: '$';
 }

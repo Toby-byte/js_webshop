@@ -29,8 +29,13 @@ const productBaseTemplate = () => {
         </header>            
         <img src="" alt="">
         <p class="description"></p>
-        <p class="price">&dollar;</p>
-        <button>Add to cart</button>
+        <div>
+            <p class="price"></p>
+        </div>
+        <div>
+            <button>Add to cart</button>
+            <input type="number" value="1" min="1" max="100">
+        </div>
     `;
     return template;
 }
@@ -45,6 +50,56 @@ const productCard = (product) => {
     card.querySelector('img').setAttribute('alt', product.title);
     card.querySelector('p.description').innerText = product.description;
     card.querySelector('p.price').innerText = product.price;
+    card.querySelector('button').addEventListener('click', () => {
+        let storedCart = JSON.parse(localStorage.getItem('kea-webshop-cart'));
+        if (storedCart === null) {
+            storedCart = [];
+        }
+        const amount = parseInt(card.querySelector('input[type=number]').value);
+        const price = parseFloat((product.price * amount).toFixed(2));
+
+        let found = false;
+        let firstItem = true;
+        let cart = '[';
+        storedCart.forEach((item) => {
+            // If the item is already in the cart, its amount and price are updated
+            if (item.product === product.title) {
+                item.amount += amount;
+                item.price = parseFloat(item.price) + price;
+                found = true;
+            }
+            if (firstItem) {
+                firstItem = false;
+            } else {
+                cart += ',';
+            }
+            cart += JSON.stringify(item);
+        });
+
+        // The item is a new addition to the cart
+        if (!found) {
+            if (cart !== '[') {
+                cart += ',';
+            }
+            cart += '{"product":"' + product.title + '",' +
+                '"amount":' + amount +
+                ',"price":' + price + '}';
+        }
+        cart += ']';
+
+        localStorage.setItem('kea-webshop-cart', cart);
+    });
+    card.querySelector('input[type=number]').addEventListener('blur', function() {
+        let amount = parseInt(this.value);
+        if (!Number.isInteger(amount) || amount == 0) {
+            amount = 1;
+        }
+        if (amount > 100) {
+            alert('The amount per product is limited to 100 units. Sorry for the inconvenience');
+            amount = 100;
+        }
+        this.value = Math.abs(amount);
+    });
 
     return card;
 }
