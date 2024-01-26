@@ -4,6 +4,7 @@
 Simple KEA Webshop example. It uses:
 - `json-server` and `sessionStorage` for user signup and login
 - Fake Store API (https://fakestoreapi.com/) for product listing
+- `localStorage` for the product cart
 
 ## Instructions
 1. Install JSON Server:

@@ -3,20 +3,23 @@
  * The Log in, Log out and Sign up options are hidden or unhidden 
  *     depending on whether the user is logged in or not
  */
+const userEmail = sessionStorage.getItem('userEmail');
 (function() {
-    const userEmail = sessionStorage.getItem('userEmail');
-
     const logOutOption = document.querySelector('#optLogout');
     if (userEmail !== null) {
         logOutOption.classList.remove('hidden');
         logOutOption.querySelector('#userEmail').innerText = userEmail;
         document.querySelector('#optLogin').classList.add('hidden');
         document.querySelector('#optSignup').classList.add('hidden');
+        
+        document.querySelector('#optCart').classList.remove('hidden');        
     } else {
         logOutOption.classList.add('hidden');
         logOutOption.querySelector('#userEmail').innerText = '';
         document.querySelector('#optLogin').classList.remove('hidden');
         document.querySelector('#optSignup').classList.remove('hidden');
+
+        document.querySelector('#optCart').classList.add('hidden');
     }
 })();
 
@@ -32,7 +35,7 @@ const productBaseTemplate = () => {
         <div>
             <p class="price"></p>
         </div>
-        <div>
+        <div class="cart${userEmail === null ? ' hidden' : ''}">
             <button>Add to cart</button>
             <input type="number" value="1" min="1" max="100">
         </div>
