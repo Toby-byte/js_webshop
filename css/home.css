@@ -5,6 +5,8 @@
     --colourLight: gray;
     --colourTextSecondary: floralwhite;
     --colourBGButton: #6699FF;
+
+    --iconDimension: 24px;
 }
 
 img {
@@ -57,6 +59,28 @@ a:hover {
 
 table {
     width: auto;
+}
+table > tr {
+    border-bottom: thin solid var(--colourBorder);
+}
+table button, table img {
+    width: var(--iconDimension);
+    height: var(--iconDimension);
+    margin: 0;
+    padding: 0;
+    background-color: var(--colourTextSecondary);
+}
+table img {
+    border: solid thin var(--colourBorder);
+    border-radius: 0.25rem;
+}
+td {
+    vertical-align: middle;
+}
+
+dialog > div > button {
+    float: right;
+    margin-right: 3rem;
 }
 
 .hidden {

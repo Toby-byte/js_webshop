@@ -144,6 +144,7 @@ const cartItemBaseTemplate = () => {
     template.innerHTML = `
         <td class="titleCell"></td>
         <td class="amountCell alignRight"></td>
+        <td class="removeCell"><button class="remove"><img src="img/trash.png" alt="Remove product"></button></td>
         <td class="priceCell alignRight"></td>
     `;
     return template;
@@ -191,6 +192,7 @@ document.querySelector('#optCart > a').addEventListener('click', () => {
         const productsTotal = document.createElement('tfoot');
         productsTotal.innerHTML = `
             <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td class="priceCell alignRight">${totalPrice.toFixed(2)}</td>
