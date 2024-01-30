@@ -47,9 +47,16 @@ input[type=number] {
     width: 2.5rem;
     text-align: right;
 }
+td > input[type=number] {
+    padding: 0 0.5rem;
+}
 
 a:hover {
     text-decoration: none;
+}
+
+table {
+    width: auto;
 }
 
 .hidden {
@@ -64,11 +71,15 @@ a:hover {
     background-color: var(--colourBGButton);
     border-radius: 0.5rem;
 }
-.price:before {
+.price:before, .priceCell:before {
     content: '$';
 }
 
 #userEmail {
     font-size: 0.8rem;
     margin-right: 1rem;
+}
+
+.alignRight {
+    text-align: right;
 }

@@ -60,7 +60,7 @@ const productCard = (product) => {
             storedCart = [];
         }
         const amount = parseInt(card.querySelector('input[type=number]').value);
-        const price = parseFloat((product.price * amount).toFixed(2));
+        const unitPrice = parseFloat(product.price);
 
         let found = false;
         let firstItem = true;
@@ -87,25 +87,27 @@ const productCard = (product) => {
             }
             cart += '{"product":"' + product.title + '",' +
                 '"amount":' + amount +
-                ',"price":' + price + '}';
+                ',"unit-price":' + unitPrice + '}';
         }
         cart += ']';
 
         localStorage.setItem('kea-webshop-cart', cart);
     });
-    card.querySelector('input[type=number]').addEventListener('blur', function() {
-        let amount = parseInt(this.value);
-        if (!Number.isInteger(amount) || amount == 0) {
-            amount = 1;
-        }
-        if (amount > 100) {
-            alert('The amount per product is limited to 100 units. Sorry for the inconvenience');
-            amount = 100;
-        }
-        this.value = Math.abs(amount);
-    });
+    card.querySelector('input[type=number]').addEventListener('blur', handleNumberInputBlur);
 
     return card;
+}
+
+const handleNumberInputBlur = function() {
+    let amount = parseInt(this.value);
+    if (!Number.isInteger(amount) || amount == 0) {
+        amount = 1;
+    }
+    if (amount > 100) {
+        alert('The amount per product is limited to 100 units. Sorry for the inconvenience');
+        amount = 100;
+    }
+    this.value = Math.abs(amount);
 }
 
 /**
@@ -138,13 +140,11 @@ fetch(apiUrl)
  * Shopping cart management
  */
 const cartItemBaseTemplate = () => {
-    const template = document.createElement('article');
+    const template = document.createElement('tr');
     template.innerHTML = `
-        <p>
-            <span class="title"></span>
-            <span class="amount"></span>
-            <span class="price"></span>
-        </p>
+        <td class="titleCell"></td>
+        <td class="amountCell alignRight"></td>
+        <td class="priceCell alignRight"></td>
     `;
     return template;
 }
@@ -162,17 +162,64 @@ document.querySelector('#optCart > a').addEventListener('click', () => {
         emptyCartMessage.innerText = 'The cart is empty. Please add some products to the cart.';
         cartInfo.appendChild(emptyCartMessage);
     } else {
+        let totalPrice = 0;
+        const products = document.createElement('table');        
         storedCart.forEach((item) => {
+            const itemPrice = item.amount * item['unit-price'];
+            totalPrice += itemPrice;
+
             const row = cartItemTemplate.cloneNode(true);
-            row.querySelector('.title').innerText = item.product;
-            row.querySelector('.amount').innerText = item.amount;
-            row.querySelector('.price').innerText = item.price;
-            cartInfo.appendChild(row);
-        });        
+            
+            row.querySelector('.titleCell').innerText = item.product;
+            
+            const amountTextbox = document.createElement('input');
+            amountTextbox.setAttribute('type', 'number');
+            amountTextbox.setAttribute('min', '1');
+            amountTextbox.setAttribute('max', '100');
+            amountTextbox.setAttribute('value', item.amount);
+            amountTextbox.addEventListener('blur', handleNumberInputBlur);
+            amountTextbox.addEventListener('change', handleNumberInputChange);
+            row.querySelector('.amountCell').appendChild(amountTextbox);
+            
+            // The original price is stored to recalculate the price when the amount changes
+            const priceCell = row.querySelector('.priceCell');
+            priceCell.innerText = `${itemPrice.toFixed(2)}`;
+            priceCell.setAttribute('default-value', item['unit-price']);
+
+            products.appendChild(row);
+        });
+        const productsTotal = document.createElement('tfoot');
+        productsTotal.innerHTML = `
+            <tr>
+                <td></td>
+                <td></td>
+                <td class="priceCell alignRight">${totalPrice.toFixed(2)}</td>
+            </tr>
+        `;
+        products.appendChild(productsTotal);
+        cartInfo.appendChild(products);
+
     }
     section.appendChild(cartInfo);
     cart.showModal();
 });
+
+/**
+ * When the amount of any product changes, 
+ * both the price of said product and the total must update accordingly
+ */
+const handleNumberInputChange = function() {
+    const itemPriceCell = this.parentElement.nextElementSibling;
+    const previousItemPrice = parseFloat(itemPriceCell.innerText);
+
+    const amount = parseInt(this.value);
+    const unitPrice = parseFloat(itemPriceCell.getAttribute('default-value'));
+    const newItemPrice = parseFloat(amount * unitPrice);
+    itemPriceCell.innerText = newItemPrice.toFixed(2);
+
+    const total = document.querySelector('tfoot td.priceCell');
+    total.innerHTML = (parseFloat(total.innerText) + newItemPrice - previousItemPrice).toFixed(2);
+};
 
 // Cart closing
 document.querySelector('#cart > header > div').addEventListener('click', () => {
