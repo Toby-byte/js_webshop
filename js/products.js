@@ -187,6 +187,8 @@ document.querySelector('#optCart > a').addEventListener('click', () => {
             priceCell.innerText = `${itemPrice.toFixed(2)}`;
             priceCell.setAttribute('default-value', item['unit-price']);
 
+            row.querySelector('.remove').addEventListener('click', handleRemoveProduct);
+
             products.appendChild(row);
         });
         const productsTotal = document.createElement('tfoot');
@@ -207,11 +209,23 @@ document.querySelector('#optCart > a').addEventListener('click', () => {
 });
 
 /**
+ * When a product is removed from the cart, the amount has to be deducted from the total
+ */
+const handleRemoveProduct = function() {
+    const itemPrice = parseFloat(this.parentElement.nextElementSibling.innerText);
+    const totalPriceCell = document.querySelector('tfoot .priceCell');
+
+    totalPriceCell.innerText = (parseFloat(totalPriceCell.innerText) - itemPrice).toFixed(2);
+
+    this.parentElement.parentElement.remove();
+}
+
+/**
  * When the amount of any product changes, 
  * both the price of said product and the total must update accordingly
  */
 const handleNumberInputChange = function() {
-    const itemPriceCell = this.parentElement.nextElementSibling;
+    const itemPriceCell = this.parentElement.parentElement.lastElementChild;
     const previousItemPrice = parseFloat(itemPriceCell.innerText);
 
     const amount = parseInt(this.value);
