@@ -5,12 +5,38 @@ import { handleNumberInputBlur } from './products.js';
  */
 const cartItemBaseTemplate = () => {
     const template = document.createElement('tr');
-    template.innerHTML = `
-        <td class="titleCell"></td>
-        <td class="amountCell alignRight"></td>
-        <td class="removeCell"><button class="remove"><img src="img/trash.png" alt="Remove product"></button></td>
-        <td class="priceCell alignRight"></td>
-    `;
+
+    const titleCell = document.createElement('td');
+    titleCell.classList.add('titleCell');
+    template.appendChild(titleCell);
+
+    const amountCell = document.createElement('td');
+    amountCell.classList.add('amountCell');
+    amountCell.classList.add('alignRight');
+    template.appendChild(amountCell);
+
+    const removeCell = document.createElement('td');
+    const removeButton = document.createElement('button');
+    removeButton.classList.add('remove');
+    const removeImage = document.createElement('img');
+    removeImage.setAttribute('src', 'img/trash.png');
+    removeImage.setAttribute('alt', 'Remove product');
+    removeButton.appendChild(removeImage);
+    removeCell.appendChild(removeButton);
+    template.appendChild(removeCell);
+
+    const priceCell = document.createElement('td');
+    priceCell.classList.add('priceCell');
+    priceCell.classList.add('alignRight');
+    template.appendChild(priceCell);
+
+    // == INITIAL IMPLEMENTATION ==
+    // template.innerHTML = `
+    //     <td class="titleCell"></td>
+    //     <td class="amountCell alignRight"></td>
+    //     <td class="removeCell"><button class="remove"><img src="img/trash.png" alt="Remove product"></button></td>
+    //     <td class="priceCell alignRight"></td>
+    // `;
     return template;
 }
 const cartItemTemplate = cartItemBaseTemplate();
@@ -56,14 +82,28 @@ document.querySelector('#optCart > a').addEventListener('click', () => {
             products.appendChild(row);
         });
         const productsTotal = document.createElement('tfoot');
-        productsTotal.innerHTML = `
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="priceCell alignRight">${totalPrice.toFixed(2)}</td>
-            </tr>
-        `;
+        const totalRow = document.createElement('tr');
+        totalRow.appendChild(document.createElement('td'));
+        totalRow.appendChild(document.createElement('td'));
+        totalRow.appendChild(document.createElement('td'));
+        
+        const totalPriceCell = document.createElement('td');
+        totalPriceCell.classList.add('priceCell');
+        totalPriceCell.classList.add('alignRight');
+        totalPriceCell.innerText = totalPrice.toFixed(2);
+        totalRow.appendChild(totalPriceCell);
+
+        productsTotal.appendChild(totalRow);
+
+        // == INITIAL IMPLEMENTATION ==
+        // productsTotal.innerHTML = `
+        //     <tr>
+        //         <td></td>
+        //         <td></td>
+        //         <td></td>
+        //         <td class="priceCell alignRight">${totalPrice.toFixed(2)}</td>
+        //     </tr>
+        // `;
         products.appendChild(productsTotal);
         cartInfo.appendChild(products);
 
