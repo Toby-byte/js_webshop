@@ -82,54 +82,74 @@ const productTemplate = productBaseTemplate();
 const productCard = (product) => {
     const card = productTemplate.cloneNode(true);
 
+    const productTitle = product.title.trim();
     card.querySelector('header > p').innerText = product.category;
-    card.querySelector('h2').innerText = product.title;
+    card.querySelector('h2').innerText = productTitle;
     card.querySelector('img').setAttribute('src', product.image);
     card.querySelector('img').setAttribute('alt', product.title);
     card.querySelector('p.description').innerText = product.description;
     card.querySelector('p.price').innerText = product.price;
-    card.querySelector('button').addEventListener('click', () => {
-        let storedCart = JSON.parse(localStorage.getItem('kea-webshop-cart'));
-        if (storedCart === null) {
-            storedCart = [];
-        }
-        const amount = parseInt(card.querySelector('input[type=number]').value);
-        const unitPrice = parseFloat(product.price);
-
-        let found = false;
-        let firstItem = true;
-        let cart = '[';
-        storedCart.forEach((item) => {
-            // If the item is already in the cart, its amount and price are updated
-            if (item.product === product.title) {
-                item.amount += amount;
-                item.price = parseFloat(item.price) + price;
-                found = true;
-            }
-            if (firstItem) {
-                firstItem = false;
-            } else {
-                cart += ',';
-            }
-            cart += JSON.stringify(item);
-        });
-
-        // The item is a new addition to the cart
-        if (!found) {
-            if (cart !== '[') {
-                cart += ',';
-            }
-            cart += '{"product":"' + product.title + '",' +
-                '"amount":' + amount +
-                ',"unit-price":' + unitPrice + '}';
-        }
-        cart += ']';
-
-        localStorage.setItem('kea-webshop-cart', cart);
-    });
+    card.querySelector('button').addEventListener('click', () => updateCart(productTitle, 
+        parseInt(card.querySelector('input[type=number]').value),
+        parseFloat(product.price),
+        true));
     card.querySelector('input[type=number]').addEventListener('blur', handleNumberInputBlur);
 
     return card;
+}
+
+/**
+ * It updates the cart in localStorage upon any product change
+ * @param {*} productTitle 
+ * @param {*} amount. If 0, the product is deleted
+ * @param {*} unitPrice
+ * @param {*} add. If true, the new amount is added to the existing one.
+ *                 Otherwise, it is replaced
+ */
+export const updateCart = (productTitle, amount, unitPrice, add = false) => {
+    let storedCart = JSON.parse(localStorage.getItem('kea-webshop-cart'));
+    if (storedCart === null) {
+        storedCart = [];
+    }
+
+    let found = false;
+    let firstItem = true;
+    let cart = '[';
+    storedCart.forEach((item) => {
+        // If the item is already in the cart, its amount and price are updated
+        if (item.product === productTitle) {
+            found = true;
+            if (amount === 0) {
+                return;
+            }
+            if (add) {
+                item.amount += amount;
+                item.price = parseFloat(item.price) + unitPrice;
+            } else {
+                item.amount = amount;
+                item.price = (parseFloat(amount * unitPrice)).toFixed(2);
+            }
+        }
+        if (firstItem) {
+            firstItem = false;
+        } else {
+            cart += ',';
+        }
+        cart += JSON.stringify(item);
+    });
+
+    // The item is a new addition to the cart
+    if (!found) {
+        if (cart !== '[') {
+            cart += ',';
+        }
+        cart += '{"product":"' + productTitle + '",' +
+            '"amount":' + amount +
+            ',"unit-price":' + unitPrice + '}';
+    }
+    cart += ']';
+
+    localStorage.setItem('kea-webshop-cart', cart);
 }
 
 export const handleNumberInputBlur = function() {

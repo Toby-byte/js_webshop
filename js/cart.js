@@ -1,4 +1,4 @@
-import { handleNumberInputBlur } from './products.js';
+import { updateCart, handleNumberInputBlur } from './products.js';
 
 /**
  * Shopping cart management
@@ -122,6 +122,9 @@ const handleRemoveProduct = function() {
     totalPriceCell.innerText = (parseFloat(totalPriceCell.innerText) - itemPrice).toFixed(2);
 
     this.parentElement.parentElement.remove();
+
+    // The cart is updated in localStorage
+    updateCart(this.parentElement.parentElement.firstElementChild.innerText, 0, 0);
 }
 
 /**
@@ -139,6 +142,9 @@ const handleNumberInputChange = function() {
 
     const total = document.querySelector('tfoot td.priceCell');
     total.innerHTML = (parseFloat(total.innerText) + newItemPrice - previousItemPrice).toFixed(2);
+
+    // The cart is updated in localStorage
+    updateCart(this.parentElement.previousElementSibling.innerText, amount, unitPrice);
 };
 
 // Cart closing
