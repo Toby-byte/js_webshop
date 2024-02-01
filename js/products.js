@@ -26,21 +26,55 @@ const userEmail = sessionStorage.getItem('userEmail');
  */
 const productBaseTemplate = () => {
     const template = document.createElement('article');
-    template.innerHTML = `
-        <header>
-            <p></p>
-            <h2></h2>
-        </header>            
-        <img src="" alt="">
-        <p class="description"></p>
-        <div>
-            <p class="price"></p>
-        </div>
-        <div class="cart${userEmail === null ? ' hidden' : ''}">
-            <button>Add to cart</button>
-            <input type="number" value="1" min="1" max="100">
-        </div>
-    `;
+
+    const header = document.createElement('header');
+    header.appendChild(document.createElement('p'));
+    header.appendChild(document.createElement('h2'));    
+    template.appendChild(header);
+    template.appendChild(document.createElement('img'));
+
+    const description = document.createElement('p');
+    description.classList.add('description');
+    template.appendChild(description);
+    
+    const priceWrapper = document.createElement('div');
+    const price = document.createElement('p');
+    price.classList.add('price');
+    priceWrapper.appendChild(price);
+    template.appendChild(priceWrapper);
+
+    const addToCart = document.createElement('div');
+    addToCart.classList.add('cart');
+    if (userEmail === null) {
+        addToCart.classList.add('hidden');
+    }
+    const button = document.createElement('button');
+    button.innerText = 'Add to cart';
+    addToCart.appendChild(button)
+    const number = document.createElement('input');
+    number.setAttribute('type', 'number');
+    number.setAttribute('value', '1');
+    number.setAttribute('min', '1');
+    number.setAttribute('max', '100');
+    addToCart.appendChild(number);
+    template.appendChild(addToCart);
+
+    // == INITIAL IMPLEMENTATION == 
+    // template.innerHTML = `
+    //     <header>
+    //         <p></p>
+    //         <h2></h2>
+    //     </header>            
+    //     <img src="" alt="">
+    //     <p class="description"></p>
+    //     <div>
+    //         <p class="price"></p>
+    //     </div>
+    //     <div class="cart${userEmail === null ? ' hidden' : ''}">
+    //         <button>Add to cart</button>
+    //         <input type="number" value="1" min="1" max="100">
+    //     </div>
+    // `;
     return template;
 }
 const productTemplate = productBaseTemplate();
