@@ -41,8 +41,8 @@ const cartItemBaseTemplate = () => {
 }
 const cartItemTemplate = cartItemBaseTemplate();
 
-const cart = document.querySelector('#cart');
 document.querySelector('#optCart > a').addEventListener('click', () => {
+    const cart = document.querySelector('#cart');
     const section = cart.querySelector('section');
     section.innerHTML = '';
 
@@ -148,8 +148,9 @@ const handleNumberInputChange = function() {
 };
 
 // Cart closing
-document.querySelector('#cart > header a').addEventListener('click', () => {
-    cart.close();
+document.querySelector('#cart > header a').addEventListener('click', function () {
+    // dialog#cart > header > div > a
+    this.parentElement.parentElement.parentElement.close();
 });
 
 // Check out
