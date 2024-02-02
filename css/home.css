@@ -78,9 +78,22 @@ td {
     vertical-align: middle;
 }
 
-dialog > div > button {
-    float: right;
-    margin-right: 3rem;
+dialog .submit {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;    
+}
+
+form div {
+    display: flex;
+    flex-flow: row wrap;
+}
+form label:not(.long) {
+    width: 6rem;
+    margin: 0 1rem 0 0.5rem;
+}
+.fullLine {
+    flex-grow: 1;
 }
 
 .hidden {
@@ -106,4 +119,12 @@ dialog > div > button {
 
 .alignRight {
     text-align: right;
+}
+
+#addresses > article {
+    border: none;
+    margin-bottom: 0;
+}
+fieldset {
+    margin-bottom: 0;
 }

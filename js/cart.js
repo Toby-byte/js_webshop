@@ -148,6 +148,12 @@ const handleNumberInputChange = function() {
 };
 
 // Cart closing
-document.querySelector('#cart > header > div').addEventListener('click', () => {
+document.querySelector('#cart > header a').addEventListener('click', () => {
     cart.close();
+});
+
+// Check out
+document.querySelector('#cart > form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    document.querySelector('#checkout').showModal();
 });
