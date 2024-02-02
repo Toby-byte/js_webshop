@@ -1,4 +1,5 @@
 import { updateCart, handleNumberInputBlur } from './products.js';
+import { showAlert } from './utils.js';
 
 /**
  * Shopping cart management
@@ -49,9 +50,8 @@ document.querySelector('#optCart > a').addEventListener('click', () => {
     const cartInfo = document.createElement('div');
     const storedCart = JSON.parse(localStorage.getItem('kea-webshop-cart'));
     if (storedCart === null || storedCart.length === 0) {
-        const emptyCartMessage = document.createElement('p');
-        emptyCartMessage.innerText = 'The cart is empty. Please add some products to the cart.';
-        cartInfo.appendChild(emptyCartMessage);
+        showAlert('The cart is empty. Please add some products to the cart.');
+        return;
     } else {
         let totalPrice = 0;
         const products = document.createElement('table');        
@@ -106,7 +106,6 @@ document.querySelector('#optCart > a').addEventListener('click', () => {
         // `;
         products.appendChild(productsTotal);
         cartInfo.appendChild(products);
-
     }
     section.appendChild(cartInfo);
     cart.showModal();
@@ -122,6 +121,12 @@ const handleRemoveProduct = function() {
     totalPriceCell.innerText = (parseFloat(totalPriceCell.innerText) - itemPrice).toFixed(2);
 
     this.parentElement.parentElement.remove();
+
+    // If the last product was removed, the dialog is closed and the user is informed
+    if (parseFloat(totalPriceCell.innerText) === 0) {
+        document.querySelector('#cart').close();
+        showAlert('The cart is now empty');        
+    }
 
     // The cart is updated in localStorage
     updateCart(this.parentElement.parentElement.firstElementChild.innerText, 0, 0);

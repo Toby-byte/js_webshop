@@ -90,12 +90,38 @@
                 </article>
             </section>
             <section id="payment">
-                
+                <!-- This <article> has no semantic meaning. Its purpose is to prevent Water.css from misaligning the content -->
+                <article>
+                    <fieldset>
+                        <legend>Credit card</legend>
+                        <div>
+                            <label for="txtCreditCardName">Name on card</label>
+                            <input type="text" id="txtCreditCardName" class="fullLine" required>
+                        </div>
+                        <!-- <div>
+                            <label for="txtCreditCard">Number</label>
+                            <input type="text" id="txtCreditCard" class="fullLine" pattern="[0-9]{16}" required>
+                        </div> -->
+                        <div>
+                            <label for="txtExpiryDate">Expiration</label>
+                            <input type="month" id="txtExpiryDate" required>
+                            <label for="txtCVV">CVV</label>
+                            <input type="text" id="txtCVV" pattern="[0-9]{3}" required>
+                        </div>
+                    </fieldset>
+                </article>
             </section>
             <div class="submit">
                 <input type="submit" value="Place Purchase"></input>
             </div>
         </form>
+    </dialog>
+    <dialog id="alert">
+        <header>
+            <h2>Information</h2>
+            <div><a href="#" title="Close Alert">&times;</a></div>
+        </header>
+        <section></section>
     </dialog>
     <footer>
         <p>&copy; 2023-2024 Arturo Mora-Rioja</p>

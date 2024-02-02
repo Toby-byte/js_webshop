@@ -89,7 +89,7 @@ form div {
     flex-flow: row wrap;
 }
 form label:not(.long) {
-    width: 6rem;
+    width: 7rem;
     margin: 0 1rem 0 0.5rem;
 }
 .fullLine {
@@ -121,7 +121,7 @@ form label:not(.long) {
     text-align: right;
 }
 
-#addresses > article {
+form article {
     border: none;
     margin-bottom: 0;
 }
