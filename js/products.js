@@ -59,6 +59,9 @@ const productBaseTemplate = () => {
     addToCart.appendChild(number);
     template.appendChild(addToCart);
 
+    const floatClearer = document.createElement('div');
+    template.appendChild(floatClearer);
+
     // == INITIAL IMPLEMENTATION == 
     // template.innerHTML = `
     //     <header>
@@ -74,6 +77,7 @@ const productBaseTemplate = () => {
     //         <button>Add to cart</button>
     //         <input type="number" value="1" min="1" max="100">
     //     </div>
+    //     <div></div> // This div clears the product image's float
     // `;
     return template;
 }

@@ -40,6 +40,9 @@ article > div {
     display: flex;
     flex-flow: row nowrap;
 }
+article > div:last-child {
+    clear: right;
+}
 
 nav li {
     margin-left: 1rem;
