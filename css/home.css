@@ -5,6 +5,7 @@
     --colourLight: gray;
     --colourTextSecondary: floralwhite;
     --colourBGButton: #6699FF;
+    --colourWarning: red;
 
     --iconDimension: 24px;
 }
@@ -44,8 +45,21 @@ article > div:last-child {
     clear: right;
 }
 
+nav ul {
+    display: flex;
+    flex-flow: row nowrap;
+}
 nav li {
     margin-left: 1rem;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-end;
+}
+#itemsInCart {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--colourWarning);
 }
 
 input[type=number] {

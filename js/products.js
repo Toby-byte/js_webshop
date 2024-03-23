@@ -11,7 +11,15 @@ const userEmail = sessionStorage.getItem('userEmail');
         logOutOption.querySelector('#userEmail').innerText = userEmail;
         document.querySelector('#optLogin').classList.add('hidden');
         document.querySelector('#optSignup').classList.add('hidden');        
-        document.querySelector('#optCart').classList.remove('hidden');        
+        document.querySelector('#optCart').classList.remove('hidden');       
+                
+        const cart = localStorage.getItem('kea-webshop-cart-' + userEmail);
+        if (cart === null || cart === '[]') {
+            document.querySelector('#itemsInCart').classList.add('hidden');
+        } else {
+            document.querySelector('#itemsInCart').classList.remove('hidden');
+        }            
+
     } else {
         logOutOption.classList.add('hidden');
         logOutOption.querySelector('#userEmail').innerText = '';
@@ -154,6 +162,12 @@ export const updateCart = (productTitle, amount, unitPrice, add = false) => {
     cart += ']';
 
     localStorage.setItem('kea-webshop-cart-' + userEmail, cart);
+
+    if (cart === '[]') {
+        document.querySelector('#itemsInCart').classList.add('hidden');
+    } else {
+        document.querySelector('#itemsInCart').classList.remove('hidden');
+    }
 }
 
 export const handleNumberInputBlur = function() {
