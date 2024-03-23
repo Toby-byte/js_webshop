@@ -111,7 +111,7 @@ const productCard = (product) => {
  *                 Otherwise, it is replaced
  */
 export const updateCart = (productTitle, amount, unitPrice, add = false) => {
-    let storedCart = JSON.parse(localStorage.getItem('kea-webshop-cart'));
+    let storedCart = JSON.parse(localStorage.getItem('kea-webshop-cart-' + userEmail));
     if (storedCart === null) {
         storedCart = [];
     }
@@ -153,7 +153,7 @@ export const updateCart = (productTitle, amount, unitPrice, add = false) => {
     }
     cart += ']';
 
-    localStorage.setItem('kea-webshop-cart', cart);
+    localStorage.setItem('kea-webshop-cart-' + userEmail, cart);
 }
 
 export const handleNumberInputBlur = function() {

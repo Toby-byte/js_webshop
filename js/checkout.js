@@ -37,7 +37,8 @@ document.querySelector('#checkout > header a').addEventListener('click', functio
  * Submit. The cart is emptied and a message is shown
  */
 document.querySelector('#checkout form').addEventListener('submit', function(e) {
-    localStorage.removeItem('kea-webshop-cart');
+    const userEmail = sessionStorage.getItem('userEmail');
+    localStorage.removeItem('kea-webshop-cart-' + userEmail);
     showAlert('Your order has been processed.');
     
     this.parentElement.close();

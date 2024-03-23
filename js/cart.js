@@ -48,7 +48,8 @@ document.querySelector('#optCart > a').addEventListener('click', () => {
     section.innerHTML = '';
 
     const cartInfo = document.createElement('div');
-    const storedCart = JSON.parse(localStorage.getItem('kea-webshop-cart'));
+    const userEmail = sessionStorage.getItem('userEmail');
+    const storedCart = JSON.parse(localStorage.getItem('kea-webshop-cart-' + userEmail));
     if (storedCart === null || storedCart.length === 0) {
         showAlert('The cart is empty. Please add some products to the cart.');
         return;
