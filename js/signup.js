@@ -38,9 +38,9 @@ document.querySelector('#frmSignup').addEventListener('submit', function(e) {
             method: 'POST',
             mode: 'cors',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/json'
             },
-            body: params
+            body: JSON.stringify({ email, pwd }),
         }).then((response) => { 
             console.log(response); 
             alert('The sign up was successful');
